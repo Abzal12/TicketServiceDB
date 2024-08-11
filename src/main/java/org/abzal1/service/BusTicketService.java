@@ -18,6 +18,8 @@ public class BusTicketService {
             lines = Files.readAllLines(Paths.get(filePath));
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
 
         for (int i = 0; i < lines.size(); i++) {
@@ -40,6 +42,8 @@ public class BusTicketService {
             } catch (JsonProcessingException e) {
                 System.err.println("Something went wrong while processing json in ticketData.txt file in the line of "
                         + lineNum + ": " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Unexpected error: " + e.getMessage());
             }
         }
         return busTicketObjectList;
