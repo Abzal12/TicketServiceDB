@@ -26,9 +26,6 @@ public class TicketApplication {
         TicketDaoImpl ticketDaoImpl = new TicketDaoImpl(jdbcConnection);
         UserDaoImpl userDaoImpl = new UserDaoImpl(jdbcConnection);
 
-        ticketDaoImpl.createTicketType();
-        ticketDaoImpl.createTables();
-
 //      with translation support
         Connection localConnection = null;
         try {

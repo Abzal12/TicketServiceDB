@@ -18,49 +18,6 @@ public class TicketDaoImpl implements TicketDao<BusTicket> {
         this.connection = jdbcConnection.getConnection();
     }
 
-    public void createTicketType() {
-        final String sql =
-                "CREATE TYPE ticket_type " +
-                "AS ENUM ('DAY', 'WEEK', 'MONTH', 'YEAR');";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getSQLState());
-            System.out.println(e.getMessage());
-            System.out.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Unexpected error: " + e.getMessage());
-        }
-    }
-
-    public void createTables() {
-        final String sql =
-                "CREATE TABLE IF NOT EXISTS users (" +
-                "id SERIAL PRIMARY KEY," +
-                "name VARCHAR(255)," +
-                "creation_date DATE" +
-                ");" +
-                "CREATE TABLE IF NOT EXISTS tickets (" +
-                "id SERIAL," +
-                "user_id INTEGER REFERENCES users (id) ON DELETE CASCADE," +
-                "ticket_class VARCHAR(255)," +
-                "ticket_type TICKET_TYPE," +
-                "creation_date DATE," +
-                "price DECIMAL" +
-                ");";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getSQLState());
-            System.out.println(e.getMessage());
-            System.out.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Unexpected error: " + e.getMessage());
-        }
-    }
-
     @Override
     public void saveTicket(BusTicket busTicket, int user_id) {
         try {
