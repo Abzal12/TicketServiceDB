@@ -43,9 +43,6 @@ public class UserDAO {
             Transaction transaction = session.beginTransaction();
 
             session.update(user);
-            for (Ticket ticket : user.getTickets()) {
-                session.update(ticket);
-            }
 
             transaction.commit();
         }
