@@ -1,4 +1,4 @@
-package org.abzal1.entity.ticket;
+package org.abzal1.model.ticket;
 
 public enum TicketType {
     DAY, WEEK, MONTH, YEAR
