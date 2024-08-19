@@ -2,6 +2,7 @@ package org.abzal1;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -34,22 +35,9 @@ public class ApplicationContextConfiguration {
         dataSource.setPassword(password);
         return dataSource;
     }
-//
-//    @Bean
-//    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-//        return new JdbcTemplate(dataSource);
-//    }
 
     @Bean
-    public Connection connection(DataSource dataSource) {
-        Connection connection = null;
-        try {
-            connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Unexpected error: " + e.getMessage());
-        }
-        return connection;
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 }
