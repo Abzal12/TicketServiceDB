@@ -3,6 +3,8 @@ package org.abzal1.dao.user;
 import org.abzal1.model.user.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.*;
 import java.util.Optional;
 
@@ -14,6 +16,7 @@ public class UserDaoImpl implements UserDao<User>{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Transactional
     @Override
     public void saveUser(User user) {
         jdbcTemplate.update(
@@ -23,6 +26,7 @@ public class UserDaoImpl implements UserDao<User>{
                 Date.valueOf(user.getStartDate()));
     }
 
+    @Transactional
     @Override
     public Optional<User> fetchUserById(int id) {
         return jdbcTemplate.queryForObject(
@@ -36,6 +40,7 @@ public class UserDaoImpl implements UserDao<User>{
         );
     }
 
+    @Transactional
     @Override
     public void deleteUserbyId(int id) {
         jdbcTemplate.update(

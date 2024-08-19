@@ -1,14 +1,11 @@
 package org.abzal1.dao.ticket;
 
-
 import org.abzal1.model.ticket.BusTicket;
 import org.abzal1.model.ticket.TicketType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
+import org.springframework.transaction.annotation.Transactional;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +18,7 @@ public class TicketDaoImpl implements TicketDao<BusTicket> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Transactional
     @Override
     public void saveTicket(BusTicket busTicket) {
         jdbcTemplate.update(
@@ -32,6 +30,7 @@ public class TicketDaoImpl implements TicketDao<BusTicket> {
                 busTicket.getPrice());
     }
 
+    @Transactional
     @Override
     public Optional<BusTicket> fetchTicketById(int id) {
         return jdbcTemplate.queryForObject(
@@ -47,6 +46,7 @@ public class TicketDaoImpl implements TicketDao<BusTicket> {
         );
     }
 
+    @Transactional
     @Override
     public List<BusTicket> fetchTicketByUserId(int userId) {
         return jdbcTemplate.query(
@@ -62,6 +62,7 @@ public class TicketDaoImpl implements TicketDao<BusTicket> {
         );
     }
 
+    @Transactional
     @Override
     public void updateTicketTypeById(int id, TicketType ticketType) {
         jdbcTemplate.update(
