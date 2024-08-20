@@ -1,51 +1,66 @@
 package org.abzal1.dao.user;
 
 import org.abzal1.model.user.User;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
 
 @Component
 public class UserDaoImpl implements UserDao<User>{
-    private final JdbcTemplate jdbcTemplate;
+    private final DataSource dataSource;
 
-    public UserDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public UserDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    @Transactional
     @Override
     public void saveUser(User user) {
-        jdbcTemplate.update(
-                UserSQLQueries.INSERT_USER,
-                user.getId(),
-                user.getName(),
-                Date.valueOf(user.getStartDate()));
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(UserSQLQueries.INSERT_USER);
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.setDate(3, Date.valueOf(user.getStartDate()));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
     }
 
-    @Transactional
     @Override
     public Optional<User> fetchUserById(int id) {
-        return jdbcTemplate.queryForObject(
-                UserSQLQueries.SELECT_USER_BY_ID,
-                (rs, rowNum) -> Optional.of(new User(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getDate("creation_date").toLocalDate()
-                )),
-                id
-        );
+        Optional<User> user = Optional.empty();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(UserSQLQueries.SELECT_USER_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                Date creationDate = resultSet.getDate("creation_date");
+
+                user = Optional.of(new User(id, name, creationDate.toLocalDate()));
+            }
+        } catch (SQLException e) {
+            System.out.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
+        return user;
     }
 
-    @Transactional
     @Override
     public void deleteUserbyId(int id) {
-        jdbcTemplate.update(
-                UserSQLQueries.DELETE_USER,
-                id
-        );
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(UserSQLQueries.DELETE_USER);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
     }
 }
