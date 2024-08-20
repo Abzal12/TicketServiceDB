@@ -5,6 +5,7 @@ import org.abzal1.dao.user.UserDao;
 import org.abzal1.model.ticket.BusTicket;
 import org.abzal1.model.ticket.TicketType;
 import org.abzal1.model.user.User;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ public class TicketApplication {
 
     public static void main(String[] args) {
 
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationContextConfiguration.class)) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationContextConfiguration.class);
             UserDao userDao = context.getBean(UserDao.class);
             TicketDao ticketDao = context.getBean(TicketDao.class);
 
@@ -38,6 +39,5 @@ public class TicketApplication {
             System.out.println("fetchTicketById(2): " + ticketDao.fetchTicketById(2));
             System.out.println(userDao.fetchUserById(1));
             userDao.deleteUserbyId(1);
-        }
     }
 }
