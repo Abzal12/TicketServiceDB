@@ -40,8 +40,7 @@ public class TicketDAOImpl implements TicketDAO {
     @Override
     public List<Ticket> fetchTicketsByUserId(Long userId) {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "FROM Ticket WHERE user.id = :userId";
-            Query<Ticket> query = session.createQuery(hql, Ticket.class);
+            Query<Ticket> query = session.createQuery(TicketHQLQueries.SELECT_TICKET_BY_USER_ID, Ticket.class);
             query.setParameter("userId", userId);
             return query.list();
         }
@@ -51,11 +50,7 @@ public class TicketDAOImpl implements TicketDAO {
     public void updateTicketTypeByUserId(long id, TicketType ticketType) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            String hql = "UPDATE Ticket SET ticketType = :ticketType WHERE user.id = :userId";
-//            Ticket ticket = session.get(Ticket.class, id);
-//            ticket.setTicketType(ticketType);
-//            session.update(ticket);
-            Query<?> query = session.createQuery(hql);
+            Query<?> query = session.createQuery(TicketHQLQueries.UPDATE_TICKET_TYPE_BY_USER_ID);
             query.setParameter("ticketType", ticketType);
             query.setParameter("userId", id);
             query.executeUpdate();

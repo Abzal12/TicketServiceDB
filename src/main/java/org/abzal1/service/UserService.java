@@ -21,16 +21,6 @@ public class UserService {
         this.ticketDAOImpl = ticketDAOImpl;
     }
 
-//    @Transactional
-//    public void updateUserAndTicket(Long userId, String name, TicketType ticketType) {
-//
-//        if (!updateEnabled) {
-//            System.err.println("\nUpdating User and Ticket is disabled. Look at the config.properties file");
-//        } else {
-//            userDAOImpl.updateUserNameAndTicketTypeByUserId(userId, name, ticketType);
-//        }
-//    }
-
     @Transactional
     public void updateUserAndTicket(Long userId, String name, TicketType ticketType) {
 
