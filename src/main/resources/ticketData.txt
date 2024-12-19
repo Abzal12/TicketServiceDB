@@ -1,0 +1,17 @@
+{"ticketClass":"CLA","ticketType":"DAY","startDate":"2025-01-01"}
+{"ticketClass":"CLA", "ticketType":"DAY", "startDate":"2025-01-01"}
+{"ticketClass":"CLA", "ticketType":"PRIME", "startDate": null}
+{"ticketClass":"STD", "ticketType":"DAY", "startDate":"2025-01-01"}
+{"ticketClass":"STD", "ticketType":"WEEK", "startDate":"2020-01-01"}
+{"ticketClass":"CLA", "ticketType":"YEAR", "startDate":"2020-01-01"}
+{"ticketClass":"CLA", "ticketType":"MONTH", "startDate":"2020-01-01"}
+{"ticketClass":"CLA", "ticketType":"DAY", "startDate":"2020-01-01"}
+{"ticketClass":null, "ticketType":"MONTH", "startDate":"2020-01-01"}
+{"ticketClass":"STD", "ticketType":"MONTH", "startDate":"2020-01-01"}
+{"ticketClass":"STD", "ticketType":null, "startDate":"2020-01-01"}
+{"ticketClass":"STD", "ticketType":"YEAR", "startDate":""}
+{"ticketClass":"CLA", "ticketType":"MONTH", "startDate":"2020-01-01"}
+{"ticketClass":"STD", "ticketType":"PRIME", "startDate":"2020-01-01"}
+{"ticketClass":"CLA", "ticketType":"YEAR", "startDate":null}
+{"ticketClass":"STD", "ticketType":"DAY", "startDate":"2028-01-01"}
+{"ticketClass":"CLA", "ticketType":"DAY", "startDate":null}
